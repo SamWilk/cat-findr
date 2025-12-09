@@ -7,4 +7,12 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  resolve: {
+    alias: {
+      'timers/promises': 'timers'
+    }
+  },
+  optimizeDeps: {
+    exclude: ['@supabase/supabase-js']
+  }
 })

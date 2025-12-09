@@ -77,15 +77,6 @@ const Profile = () => {
                             {user.email}
                         </Typography>
                     </Grid>
-
-                    <Grid item xs={12}>
-                        <Typography variant="h6" gutterBottom>
-                            User ID
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
-                            {user.id}
-                        </Typography>
-                    </Grid>
                 </Grid>
 
                 <Divider sx={{ my: 3 }} />

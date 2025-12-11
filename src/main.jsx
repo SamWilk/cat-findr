@@ -10,12 +10,22 @@ import Login from "./components/login/login.jsx";
 import Profile from "./pages/profile/profile.jsx";
 
 const theme = createTheme({
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
   palette: {
     primary: {
-      main: "#1976d2",
+      main: "#5dc8ff",
     },
     secondary: {
-      main: "#dc004e",
+      main: "#d2eee9",
+    },
+    accent: {
+      main: "#2d8a7e",
+    },
+    background: {
+      default: "#d2eee9",
+      paper: "#FAFAF8",
     },
   },
 });

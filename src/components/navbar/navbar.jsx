@@ -18,25 +18,61 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        bgcolor: "primary.main",
+        color: "white",
+        boxShadow: "none",
+        borderBottom: "none",
+      }}
+    >
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Button color="inherit" onClick={() => navigate("/")}>
+          <Button
+            sx={{
+              color: "white",
+              "&:hover": { bgcolor: "accent.main" },
+            }}
+            onClick={() => navigate("/")}
+          >
             Cat Findr
           </Button>
         </Typography>
         {user ? (
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <Button color="inherit" onClick={() => navigate("/profile")}>
+            <Button
+              sx={{
+                color: "white",
+                "&:hover": { bgcolor: "accent.main" },
+              }}
+              onClick={() => navigate("/profile")}
+            >
               Profile
             </Button>
-            <Divider orientation="vertical" flexItem />
-            <Button color="inherit" onClick={handleLogout}>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ bgcolor: "white" }}
+            />
+            <Button
+              sx={{
+                color: "white",
+                "&:hover": { bgcolor: "accent.main" },
+              }}
+              onClick={handleLogout}
+            >
               Sign Out
             </Button>
           </Box>
         ) : (
-          <Button color="inherit" onClick={() => navigate("/login")}>
+          <Button
+            sx={{
+              color: "white",
+              "&:hover": { bgcolor: "accent.main" },
+            }}
+            onClick={() => navigate("/login")}
+          >
             Login
           </Button>
         )}

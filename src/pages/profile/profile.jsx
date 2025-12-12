@@ -12,13 +12,15 @@ import {
   Chip,
   Tabs,
   Tab,
+  CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import PetsIcon from "@mui/icons-material/Pets";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
 import FeedIcon from "@mui/icons-material/Feed";
+import BadgeIcon from "@mui/icons-material/Badge";
 import { useNavigate } from "react-router";
 import MyCats from "../../components/mycats/mycats.jsx";
 import ReviewApplications from "../../components/reviewapplications/reviewapplications.jsx";
@@ -27,6 +29,34 @@ const Profile = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
+  const [userProfile, setUserProfile] = useState({
+    UserProfileID: null,
+    UserName: null,
+  });
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const fetchProfileData = async () => {
+        if (user && user.id) {
+          setLoading(true);
+          const response = await fetch(`/api/profile?UserProfileID=${user.id}`);
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Fetched profile data: ", data);
+            setUserProfile(data.profile);
+          } else {
+            console.error("Failed to fetch profile data");
+          }
+          setLoading(false);
+        }
+      };
+      fetchProfileData();
+    } catch (error) {
+      console.error("Error fetching profile data: ", error);
+      setLoading(false);
+    }
+  }, []);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -124,9 +154,31 @@ const Profile = () => {
                     <EmailIcon color="primary" />
                     Email
                   </Typography>
-                  <Typography variant="body1" color="text.secondary">
-                    {user.email}
+                  {loading ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    <Typography variant="body1" color="text.secondary">
+                      {user.email}
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12} />
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                  >
+                    <BadgeIcon color="primary" />
+                    User Name
                   </Typography>
+                  {loading ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    <Typography variant="body1" color="text.secondary">
+                      {userProfile.UserName ?? "Not set"}
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
 
@@ -160,9 +212,11 @@ const Profile = () => {
             </Box>
           )}
 
-          {activeTab === 1 && <MyCats user={user} />}
+          {activeTab === 1 && <MyCats user={user} userprofile={userProfile} />}
 
-          {activeTab === 2 && <ReviewApplications user={user} />}
+          {activeTab === 2 && (
+            <ReviewApplications user={user} userprofile={userProfile} />
+          )}
         </Paper>
       </Box>
     </Container>

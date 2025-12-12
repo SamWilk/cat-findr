@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 
-const ReviewApplications = ({ user }) => {
+const ReviewApplications = ({ user, userprofile }) => {
   console.log("Showing review applications for : ", user.email);
   return (
     <Box>
